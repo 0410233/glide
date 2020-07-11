@@ -229,7 +229,9 @@
       nav: {
         active: 'glide__bullet--active'
       }
-    }
+    },
+
+    jumpDelay: 50,
   };
 
   /**
@@ -610,13 +612,24 @@
       this.index = this.settings.startAt;
     }
 
+    Glide.prototype.init = function() {
+      var autoplay = toInt(this.settings.autoplay);
+      if (autoplay <= 0) {
+        autoplay = false;
+      } else if (autoplay < 1000) {
+        autoplay = 1000;
+      }
+      this.settings.autoplay = autoplay;
+
+      this.settings.jumpDelay = Math.max(20, Math.min(toInt(this.settings.jumpDelay),  100));
+    };
+
     /**
      * Initializes glide.
      *
      * @param {Object} extensions Collection of extensions to initialize.
      * @return {Glide}
      */
-
 
     createClass(Glide, [{
       key: 'mount',
@@ -2564,9 +2577,11 @@
       }
 
       Components.Transition.after(function () {
-        Events.emit('translate.jump');
+        setTimeout(function() {
+          Events.emit('translate.jump');
 
-        Translate.set(Components.Sizes.slideWidth * Glide.index);
+          Translate.set(Components.Sizes.slideWidth * Glide.index);
+        }, Glide.settings.jumpDelay);
       });
 
       var startWidth = Components.Sizes.slideWidth * Components.Translate.getStartIndex();
@@ -3647,19 +3662,12 @@
 
     define(Autoplay, 'time', {
       /**
-       * Gets time period value for the autoplay interval. Prioritizes
-       * times in `data-glide-autoplay` attrubutes over options.
+       * Gets time period value for the autoplay interval.
        *
        * @return {Number}
        */
       get: function get() {
-        var autoplay = Components.Html.slides[Glide.index].getAttribute('data-glide-autoplay');
-
-        if (autoplay) {
-          return toInt(autoplay);
-        }
-
-        return toInt(Glide.settings.autoplay);
+        return Glide.settings.autoplay;
       }
     });
 
