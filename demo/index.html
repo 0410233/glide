@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GlideJs Demo</title>
+    <link rel="stylesheet" href="../dist/css/glide.css">
+    <style>
+        .glide, .glide-thumbs {
+          max-width: 800px;
+          margin: 60px auto;
+        }
+
+        .glide-thumbs {
+          cursor: auto;
+        }
+
+        .glide-thumbs .glide__slide {
+          cursor: pointer;
+        }
+
+        img {
+          max-width: 100%;
+        }
+        .glide__bullets img {
+          max-width: 40px;
+        }
+
+        .glide-thumbs .glide__slide {
+          opacity: .8;
+        }
+
+        .glide-thumbs .glide__slide.glide__slide--active {
+          opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="glide gallery">
+      <ul class="glide__slides">
+        <li class="glide__slide"><img src="images/alita-1.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-2.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-3.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-4.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-5.jpg" alt="alita"></li>
+      </ul>
+    </div>
+    <div class="glide glide-thumbs gallery-thumbs">
+      <ul class="glide__slides">
+        <li class="glide__slide"><img src="images/alita-1.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-2.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-3.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-4.jpg" alt="alita"></li>
+        <li class="glide__slide"><img src="images/alita-5.jpg" alt="alita"></li>
+      </ul>
+    </div>
+    <script src="jquery.min.js"></script>
+    <script src="../dist/glide.js"></script>
+    <script src="../dist/glide.jqwrapper.js"></script>
+    <script>
+      var glideThmbs = $('.gallery-thumbs').glide({
+        perView: 3,
+        loop: true,
+        center: true,
+        perSwipe: '',
+      });
+
+      var glide = $('.gallery').glide({
+        perView: 1,
+        autoplay: 0,
+        loop: false,
+        rewind: false,
+        arrows: true,
+        dots: true,
+        thumbs: glideThmbs,
+      });
+    </script>
+</body>
+</html>

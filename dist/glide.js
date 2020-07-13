@@ -164,7 +164,7 @@
      *
      * @type {Number}
      */
-    throttle: 10,
+    throttle: 20,
 
     /**
      * Moving direction mode.
@@ -202,36 +202,36 @@
      */
     breakpoints: {},
 
-    /**
-     * Collection of internally used HTML classes.
-     *
-     * @todo Refactor `slider` and `carousel` properties to single `type: { slider: '', carousel: '' }` object
-     * @type {Object}
-     */
-    classes: {
-      swipeable: 'glide--swipeable',
-      dragging: 'glide--dragging',
-      direction: {
-        ltr: 'glide--ltr',
-        rtl: 'glide--rtl'
-      },
-      type: {
-        slider: 'glide--slider',
-        carousel: 'glide--carousel'
-      },
-      slide: {
-        clone: 'glide__slide--clone',
-        active: 'glide__slide--active'
-      },
-      arrow: {
-        disabled: 'glide__arrow--disabled'
-      },
-      nav: {
-        active: 'glide__bullet--active'
-      }
-    },
-
     jumpDelay: 50,
+  };
+
+  /**
+   * Collection of internally used HTML classes.
+   *
+   * @todo Refactor `slider` and `carousel` properties to single `type: { slider: '', carousel: '' }` object
+   * @type {Object}
+   */
+  const CLASSES = {
+    swipeable: 'glide--swipeable',
+    dragging: 'glide--dragging',
+    direction: {
+      ltr: 'glide--ltr',
+      rtl: 'glide--rtl'
+    },
+    type: {
+      slider: 'glide--slider',
+      carousel: 'glide--carousel'
+    },
+    slide: {
+      clone: 'glide__slide--clone',
+      active: 'glide__slide--active'
+    },
+    arrow: {
+      disabled: 'glide__arrow--disabled'
+    },
+    nav: {
+      active: 'glide__bullet--active'
+    }
   };
 
   /**
@@ -478,35 +478,6 @@
   function mergeOptions(defaults, settings) {
     var options = _extends({}, defaults, settings);
 
-    // `Object.assign` do not deeply merge objects, so we
-    // have to do it manually for every nested object
-    // in options. Although it does not look smart,
-    // it's smaller and faster than some fancy
-    // merging deep-merge algorithm script.
-    if (settings.hasOwnProperty('classes')) {
-      options.classes = _extends({}, defaults.classes, settings.classes);
-
-      if (settings.classes.hasOwnProperty('direction')) {
-        options.classes.direction = _extends({}, defaults.classes.direction, settings.classes.direction);
-      }
-
-      if (settings.classes.hasOwnProperty('type')) {
-        options.classes.type = _extends({}, defaults.classes.type, settings.classes.type);
-      }
-
-      if (settings.classes.hasOwnProperty('slide')) {
-        options.classes.slide = _extends({}, defaults.classes.slide, settings.classes.slide);
-      }
-
-      if (settings.classes.hasOwnProperty('arrow')) {
-        options.classes.arrow = _extends({}, defaults.classes.arrow, settings.classes.arrow);
-      }
-
-      if (settings.classes.hasOwnProperty('nav')) {
-        options.classes.nav = _extends({}, defaults.classes.nav, settings.classes.nav);
-      }
-    }
-
     if (settings.hasOwnProperty('breakpoints')) {
       options.breakpoints = _extends({}, defaults.breakpoints, settings.breakpoints);
     }
@@ -534,8 +505,6 @@
      * @param {String|Array} event
      * @param {Function} handler
      */
-
-
     createClass(EventsBus, [{
       key: 'on',
       value: function on(event, handler) {
@@ -567,7 +536,6 @@
        * @param {String|Array} event
        * @param {Object=} context
        */
-
     }, {
       key: 'emit',
       value: function emit(event, context) {
@@ -630,7 +598,6 @@
      * @param {Object} extensions Collection of extensions to initialize.
      * @return {Glide}
      */
-
     createClass(Glide, [{
       key: 'mount',
       value: function mount$$1() {
@@ -655,7 +622,6 @@
        * @param  {Array} transformers Collection of transformers.
        * @return {Void}
        */
-
     }, {
       key: 'mutate',
       value: function mutate() {
@@ -676,7 +642,6 @@
        * @param {Object} settings
        * @return {Glide}
        */
-
     }, {
       key: 'update',
       value: function update() {
@@ -704,7 +669,6 @@
        * @param {String} pattern
        * @return {Glide}
        */
-
     }, {
       key: 'go',
       value: function go(pattern) {
@@ -749,7 +713,6 @@
        * @param {Boolean|Number} interval Run autoplaying with passed interval regardless of `autoplay` settings
        * @return {Glide}
        */
-
     }, {
       key: 'play',
       value: function play() {
@@ -783,7 +746,6 @@
        *
        * @return {Glide}
        */
-
     }, {
       key: 'disable',
       value: function disable() {
@@ -797,7 +759,6 @@
        *
        * @return {Glide}
        */
-
     }, {
       key: 'enable',
       value: function enable() {
@@ -813,11 +774,10 @@
        * @param  {Function} handler
        * @return {Glide}
        */
-
     }, {
       key: 'on',
       value: function on(event, handler) {
-        this._e.on(event, handler);
+        this._e.on(event, handler.bind(this));
 
         return this;
       }
@@ -828,7 +788,6 @@
        * @param  {String} name
        * @return {Boolean}
        */
-
     }, {
       key: 'isType',
       value: function isType(name) {
@@ -840,7 +799,6 @@
        *
        * @return {Object}
        */
-
     }, {
       key: 'settings',
       get: function get$$1() {
@@ -867,7 +825,6 @@
        *
        * @return {Object}
        */
-
     }, {
       key: 'index',
       get: function get$$1() {
@@ -889,7 +846,6 @@
        *
        * @return {String}
        */
-
     }, {
       key: 'type',
       get: function get$$1() {
@@ -901,7 +857,6 @@
        *
        * @return {Boolean}
        */
-
     }, {
       key: 'disabled',
       get: function get$$1() {
@@ -1502,7 +1457,7 @@
         this.root = Glide.selector;
         this.track = this.root.querySelector(TRACK_SELECTOR);
         this.slides = Array.prototype.slice.call(this.wrapper.children).filter(function (slide) {
-          return !slide.classList.contains(Glide.settings.classes.slide.clone);
+          return !slide.classList.contains(CLASSES.slide.clone);
         });
       }
     };
@@ -1877,7 +1832,7 @@
        * @return {Void}
        */
       typeClass: function typeClass() {
-        Components.Html.root.classList.add(Glide.settings.classes.type[Glide.settings.type]);
+        Components.Html.root.classList.add(CLASSES.type[Glide.settings.type]);
       },
 
 
@@ -1887,14 +1842,13 @@
        * @return {Void}
        */
       activeClass: function activeClass() {
-        var classes = Glide.settings.classes;
         var slide = Components.Html.slides[Glide.index];
 
         if (slide) {
-          slide.classList.add(classes.slide.active);
+          slide.classList.add(CLASSES.slide.active);
 
           siblings(slide).forEach(function (sibling) {
-            sibling.classList.remove(classes.slide.active);
+            sibling.classList.remove(CLASSES.slide.active);
           });
         }
       },
@@ -1971,8 +1925,7 @@
         var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
         var slides = Components.Html.slides;
         var _Glide$settings = Glide.settings,
-            perView = _Glide$settings.perView,
-            classes = _Glide$settings.classes;
+            perView = _Glide$settings.perView;
 
 
         var peekIncrementer = +!!Glide.settings.peek;
@@ -1984,7 +1937,7 @@
           for (var i = 0; i < append.length; i++) {
             var clone = append[i].cloneNode(true);
 
-            clone.classList.add(classes.slide.clone);
+            clone.classList.add(CLASSES.slide.clone);
 
             items.push(clone);
           }
@@ -1992,7 +1945,7 @@
           for (var _i = 0; _i < prepend.length; _i++) {
             var _clone = prepend[_i].cloneNode(true);
 
-            _clone.classList.add(classes.slide.clone);
+            _clone.classList.add(CLASSES.slide.clone);
 
             items.unshift(_clone);
           }
@@ -2271,7 +2224,7 @@
        * @return {Void}
        */
       addClass: function addClass() {
-        Components.Html.root.classList.add(Glide.settings.classes.direction[this.value]);
+        Components.Html.root.classList.add(CLASSES.direction[this.value]);
       },
 
 
@@ -2281,7 +2234,7 @@
        * @return {Void}
        */
       removeClass: function removeClass() {
-        Components.Html.root.classList.remove(Glide.settings.classes.direction[this.value]);
+        Components.Html.root.classList.remove(CLASSES.direction[this.value]);
       }
     };
 
@@ -2826,8 +2779,7 @@
         if (!Glide.disabled) {
           var _Glide$settings = Glide.settings,
               touchAngle = _Glide$settings.touchAngle,
-              touchRatio = _Glide$settings.touchRatio,
-              classes = _Glide$settings.classes;
+              touchRatio = _Glide$settings.touchRatio;
 
 
           var swipe = this.touches(event);
@@ -2846,7 +2798,7 @@
 
             Components.Move.make(subExSx * toFloat(touchRatio));
 
-            Components.Html.root.classList.add(classes.dragging);
+            Components.Html.root.classList.add(CLASSES.dragging);
 
             Events.emit('swipe.move');
           } else {
@@ -2866,9 +2818,7 @@
         if (!Glide.disabled) {
           var _Glide$settings2 = Glide.settings,
               perSwipe = _Glide$settings2.perSwipe,
-              touchAngle = _Glide$settings2.touchAngle,
-              classes = _Glide$settings2.classes;
-
+              touchAngle = _Glide$settings2.touchAngle;
 
           var swipe = this.touches(event);
           var threshold = this.threshold(event);
@@ -2887,7 +2837,7 @@
             Components.Move.make();
           }
 
-          Components.Html.root.classList.remove(classes.dragging);
+          Components.Html.root.classList.remove(CLASSES.dragging);
 
           this.unbindSwipeMove();
           this.unbindSwipeEnd();
@@ -3046,7 +2996,7 @@
      * - after initial building
      */
     Events.on('build.after', function () {
-      Components.Html.root.classList.add(Glide.settings.classes.swipeable);
+      Components.Html.root.classList.add(CLASSES.swipeable);
     });
 
     /**
@@ -3363,14 +3313,13 @@
        * @return {Void}
        */
       addClass: function addClass(controls) {
-        var settings = Glide.settings;
         var item = controls[Glide.index];
 
         if (item) {
-          item.classList.add(settings.classes.nav.active);
+          item.classList.add(CLASSES.nav.active);
 
           siblings(item).forEach(function (sibling) {
-            sibling.classList.remove(settings.classes.nav.active);
+            sibling.classList.remove(CLASSES.nav.active);
           });
         }
       },
@@ -3386,7 +3335,7 @@
         var item = controls[Glide.index];
 
         if (item) {
-          item.classList.remove(Glide.settings.classes.nav.active);
+          item.classList.remove(CLASSES.nav.active);
         }
       },
 
